@@ -12,7 +12,7 @@ spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 ```
 ## After creating the database, the things you need to do
-* When you run the project for the first time, set spring.jpa.hibernate.ddl-auto=create. After the table is created, don't forget to change it to update or none, but I recommend using update.
+* When you run the project for the first time, set spring.jpa.hibernate.ddl-auto=create. After the table is created, don't forget to change it to update or none, but I recommend using update. <b>To prevent the added data from being deleted</b>
 ```
 spring.jpa.hibernate.ddl-auto=update
 ```
