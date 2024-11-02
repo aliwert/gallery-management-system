@@ -5,6 +5,7 @@ import com.alimert.controller.BaseController;
 import com.alimert.controller.IAuthenticationController;
 import com.alimert.controller.RootEntity;
 import com.alimert.dto.AuthRequest;
+import com.alimert.dto.AuthResponse;
 import com.alimert.dto.DtoUser;
 import com.alimert.service.IAuthenticationService;
 import jakarta.validation.Valid;
@@ -23,5 +24,11 @@ public class AuthenticationControllerImpl extends BaseController implements IAut
     @Override
     public RootEntity<DtoUser> register(@Valid @RequestBody AuthRequest authRequest) {
         return ok(authenticationService.register(authRequest));
+    }
+
+    @PostMapping("/authenticate") // must be same on security config
+    @Override
+    public RootEntity<AuthResponse> authenticate(@Valid @RequestBody AuthRequest authRequest) {
+        return ok(authenticationService.authenticate(authRequest));
     }
 }
