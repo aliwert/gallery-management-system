@@ -7,6 +7,7 @@ import com.alimert.controller.RootEntity;
 import com.alimert.dto.AuthRequest;
 import com.alimert.dto.AuthResponse;
 import com.alimert.dto.DtoUser;
+import com.alimert.dto.RefreshTokenRequest;
 import com.alimert.service.IAuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,11 @@ public class AuthenticationControllerImpl extends BaseController implements IAut
     @Override
     public RootEntity<AuthResponse> authenticate(@Valid @RequestBody AuthRequest authRequest) {
         return ok(authenticationService.authenticate(authRequest));
+    }
+
+    @PostMapping("/refreshtoken")
+    @Override
+    public RootEntity<AuthResponse> refreshToken(@Valid @RequestBody RefreshTokenRequest tokenRequest) {
+        return ok(authenticationService.refreshToken(tokenRequest));
     }
 }
