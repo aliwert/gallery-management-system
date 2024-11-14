@@ -22,6 +22,8 @@ public class Car extends BaseEntity {
 
     private String brand;
 
+    private BigDecimal price;
+
     @Column(name = "production_year")
     private Integer productionYear;
 
