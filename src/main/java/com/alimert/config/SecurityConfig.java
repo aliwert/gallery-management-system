@@ -22,6 +22,11 @@ public class SecurityConfig {
     public static final String REGISTER = "/register";
     public static final String AUTHENTICATE = "/authenticate";
     public static final String REFRESH_TOKEN = "/refreshtoken";
+    public static final String[] SWAGGER_PATHS = {
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-ui.html"
+    };
 
     @Autowired
     private AuthenticationProvider authenticationProvider;
@@ -32,11 +37,14 @@ public class SecurityConfig {
     @Autowired
     private AuthEntryPoint authEntryPoint;
 
+
+
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(request ->
-                        request.requestMatchers(REGISTER, AUTHENTICATE, REFRESH_TOKEN).permitAll()
+                .authorizeHttpRequests(authorize ->
+                        authorize.requestMatchers(REGISTER, AUTHENTICATE, REFRESH_TOKEN).permitAll()
+                                .requestMatchers(SWAGGER_PATHS).permitAll()
                                 .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
