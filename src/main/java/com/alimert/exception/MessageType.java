@@ -10,7 +10,8 @@ public enum MessageType {
     USERNAME_NOT_FOUND("1003", "Username not found"),
     REFRESH_TOKEN_NOT_FOUND("1004", "Refresh token not found"),
     USERNAME_OR_PASSWORD_INCORRECT("1005", "Username or password incorrect"),
-    REFRESH_TOKEN_EXPIRED("1006", "Refresh token expired");
+    REFRESH_TOKEN_EXPIRED("1006", "Refresh token expired"),
+    CURRENCY_RATES_IS_OCCURED("1007", "Currency rates is occured");
 
     private String code;
 
