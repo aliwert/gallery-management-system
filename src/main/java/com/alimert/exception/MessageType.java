@@ -12,7 +12,8 @@ public enum MessageType {
     USERNAME_OR_PASSWORD_INCORRECT("1005", "Username or password incorrect"),
     REFRESH_TOKEN_EXPIRED("1006", "Refresh token expired"),
     CUSTOMER_MONEY_IS_NOT_ENOUGH("1007", "Customer money is not enough"),
-    CURRENCY_RATES_IS_OCCURED("1008", "Currency rates is occured");
+    CAR_STATUS_IS_ALREADY_SOLD("1008", "Car status already sold"),
+    CURRENCY_RATES_IS_OCCURED("1009", "Currency rates is occured");
 
     private String code;
 
