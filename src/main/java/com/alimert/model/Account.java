@@ -23,7 +23,6 @@ public class Account extends BaseEntity {
 
     private BigDecimal amount;
 
-
     @Column(name = "currency_type")
     @Enumerated(EnumType.STRING) // for enum types
     private CurrencyType currencyType;

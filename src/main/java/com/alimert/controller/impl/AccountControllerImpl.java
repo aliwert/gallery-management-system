@@ -8,10 +8,9 @@ import com.alimert.dto.DtoAccountIU;
 import com.alimert.service.IAccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -26,5 +25,18 @@ public class AccountControllerImpl extends BaseController implements IAccountCon
     @Override
     public RootEntity<DtoAccount> saveAccount(@Valid @RequestBody DtoAccountIU dtoAccountIU) {
         return ok(accountService.saveAccount(dtoAccountIU));
+    }
+
+    @Override
+    @GetMapping("/list/{id}")
+    public RootEntity<DtoAccount> findAccountById(@PathVariable(name= "id")  Long id) {
+
+        return ok(accountService.findAccountById(id));
+    }
+
+    @Override
+    @GetMapping("list")
+    public RootEntity<List<DtoAccount>> findAllAccounts() {
+        return ok(accountService.findAllAccounts());
     }
 }
