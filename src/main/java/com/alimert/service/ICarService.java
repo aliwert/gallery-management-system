@@ -3,7 +3,13 @@ package com.alimert.service;
 import com.alimert.dto.DtoCar;
 import com.alimert.dto.DtoCarIU;
 
+import java.util.List;
+
 public interface ICarService {
 
     public DtoCar saveCar(DtoCarIU dtoCarIU);
+
+    public DtoCar getCarById(Long id);
+
+    public List<DtoCar> getAllCars();
 }

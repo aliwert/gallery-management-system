@@ -9,7 +9,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarServiceImpl implements ICarService {
@@ -33,4 +36,33 @@ public class CarServiceImpl implements ICarService {
         BeanUtils.copyProperties(savedCar, dtoCar);
         return dtoCar;
     }
+
+    @Override
+    public DtoCar getCarById(Long id) {
+        DtoCar dtoCar = new DtoCar();
+        Optional<Car> optCar = carRepository.findById(id);
+        if (optCar.isEmpty()) {
+            return null;
+        }
+        Car car = optCar.get();
+        BeanUtils.copyProperties(car, dtoCar);
+
+        return dtoCar;
+    }
+
+    @Override
+    public List<DtoCar> getAllCars() {
+        List<DtoCar> dtoCars = new ArrayList<>();
+        List<Car> carList = carRepository.findAll();
+        if (!carList.isEmpty() && carList != null) {
+            for (Car car : carList) {
+                DtoCar dtoCar = new DtoCar();
+                BeanUtils.copyProperties(car, dtoCar);
+                dtoCars.add(dtoCar);
+            }
+        }
+        return dtoCars;
+    }
+
+
 }
