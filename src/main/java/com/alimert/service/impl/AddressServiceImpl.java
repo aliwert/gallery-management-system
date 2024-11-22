@@ -9,7 +9,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AddressServiceImpl implements IAddressService {
@@ -32,5 +35,32 @@ public class AddressServiceImpl implements IAddressService {
         DtoAddress dtoAddress = new DtoAddress();
         BeanUtils.copyProperties(savedAddress, dtoAddress);
         return dtoAddress;
+    }
+
+    @Override
+    public DtoAddress getAddressById(Long id) {
+        DtoAddress dtoAddress = new DtoAddress();
+        Optional<Address> optAddress = addressRepository.findById(id);
+        if(optAddress.isEmpty()) {
+            return null;
+        }
+        Address address = optAddress.get();
+        BeanUtils.copyProperties(address, dtoAddress);
+
+        return dtoAddress;
+    }
+
+    @Override
+    public List<DtoAddress> getAllAddresses() {
+        List<DtoAddress> dtoAddressList = new ArrayList<>();
+        List<Address> addressList = addressRepository.findAll();
+        if (!addressList.isEmpty() && addressList != null) {
+            for (Address address : addressList) {
+                DtoAddress dtoAddress = new DtoAddress();
+                BeanUtils.copyProperties(address, dtoAddress);
+                dtoAddressList.add(dtoAddress);
+            }
+        }
+        return dtoAddressList;
     }
 }
