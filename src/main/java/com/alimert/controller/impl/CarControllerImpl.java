@@ -38,4 +38,18 @@ public class CarControllerImpl extends BaseController implements ICarController 
     public RootEntity<List<DtoCar>> getAllCars() {
         return ok(carService.getAllCars());
     }
+
+    @Override
+    @PutMapping("update/{id}")
+    public RootEntity<DtoCar> updateCar(@PathVariable(name = "id") Long id, @RequestBody DtoCarIU dtoCarIU) {
+
+        return ok(carService.updateCar(id, dtoCarIU));
+    }
+
+    @Override
+    @DeleteMapping("/delete/{id}")
+    public RootEntity<Void> deleteCar(@PathVariable(name = "id") Long id) {
+        carService.deleteCar(id);
+        return ok(null);
+    }
 }

@@ -13,4 +13,8 @@ public interface ICarController {
     public RootEntity<DtoCar> getCarById(Long id);
 
     public RootEntity<List<DtoCar>> getAllCars();
+
+    public RootEntity<DtoCar> updateCar(Long id, DtoCarIU dtoCarIU);
+
+    public RootEntity<Void> deleteCar(Long id);
 }

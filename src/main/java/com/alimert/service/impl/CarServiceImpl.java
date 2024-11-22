@@ -1,10 +1,13 @@
 package com.alimert.service.impl;
 
+import com.alimert.controller.RootEntity;
 import com.alimert.dto.DtoCar;
 import com.alimert.dto.DtoCarIU;
+import com.alimert.model.Account;
 import com.alimert.model.Car;
 import com.alimert.repository.CarRepository;
 import com.alimert.service.ICarService;
+import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,5 +67,35 @@ public class CarServiceImpl implements ICarService {
         return dtoCars;
     }
 
+    @Override
+    public DtoCar updateCar(Long id, DtoCarIU dtoCarIU) {
+        DtoCar dtoCar = new DtoCar();
+        Optional<Car> optCar = carRepository.findById(id);
+        if (optCar.isPresent()) {
+            Car dbCar = optCar.get();
+            dbCar.setBrand(dtoCarIU.getBrand());
+            dbCar.setModel(dtoCarIU.getModel());
+            dbCar.setPrice(dtoCarIU.getPrice());
+            dbCar.setPlate(dtoCarIU.getPlate());
+            dbCar.setCarStatusType(dtoCarIU.getCarStatusType());
+            dbCar.setProductionYear(dtoCarIU.getProductionYear());
+            dbCar.setDamagePrice(dtoCarIU.getDamagePrice());
+            dbCar.setCurrencyType(dtoCarIU.getCurrencyType());
+            Car updateAccount = carRepository.save(dbCar);
+            BeanUtils.copyProperties(updateAccount, dtoCar);
+            return dtoCar;
+        }
+        return null;
+    }
 
+    @Override
+    public RootEntity<Void> deleteCar(Long id) {
+        Optional<Car> optCar = carRepository.findById(id);
+        if (optCar != null) {
+            carRepository.deleteById(id);
+        }else {
+            throw new OpenApiResourceNotFoundException("Car not found");
+        }
+        return null;
+    }
 }

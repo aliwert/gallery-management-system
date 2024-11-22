@@ -1,5 +1,6 @@
 package com.alimert.service;
 
+import com.alimert.controller.RootEntity;
 import com.alimert.dto.DtoCar;
 import com.alimert.dto.DtoCarIU;
 
@@ -12,4 +13,8 @@ public interface ICarService {
     public DtoCar getCarById(Long id);
 
     public List<DtoCar> getAllCars();
+
+    public DtoCar updateCar(Long id, DtoCarIU dtoCarIU);
+
+    public RootEntity<Void> deleteCar(Long id);
 }
