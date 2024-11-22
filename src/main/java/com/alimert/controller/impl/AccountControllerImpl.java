@@ -29,7 +29,7 @@ public class AccountControllerImpl extends BaseController implements IAccountCon
 
     @Override
     @GetMapping("/list/{id}")
-    public RootEntity<DtoAccount> findAccountById(@PathVariable(name= "id")  Long id) {
+    public RootEntity<DtoAccount> findAccountById(@PathVariable(name = "id") Long id) {
 
         return ok(accountService.findAccountById(id));
     }
@@ -38,5 +38,11 @@ public class AccountControllerImpl extends BaseController implements IAccountCon
     @GetMapping("list")
     public RootEntity<List<DtoAccount>> findAllAccounts() {
         return ok(accountService.findAllAccounts());
+    }
+
+    @Override
+    @PutMapping("/update/{id}")
+    public RootEntity<DtoAccount> updateAccount(@PathVariable(name = "id") Long id, @RequestBody DtoAccountIU dtoAccountIU) {
+        return ok(accountService.updateAccount(id, dtoAccountIU));
     }
 }

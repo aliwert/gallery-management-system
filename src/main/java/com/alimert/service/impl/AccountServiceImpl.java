@@ -64,4 +64,22 @@ public class AccountServiceImpl implements IAccountService {
         }
         return dtoAccounts;
     }
+
+    @Override
+    public DtoAccount updateAccount(Long id, DtoAccountIU dtoAccountIU) {
+
+        DtoAccount dtoAccount = new DtoAccount();
+        Optional<Account> accOptional = accountRepository.findById(id);
+        if (accOptional.isPresent()) {
+            Account dbAccount = accOptional.get();
+            dbAccount.setAmount(dtoAccountIU.getAmount());
+            dbAccount.setAccountNo(dtoAccountIU.getAccountNo());
+            dbAccount.setIban(dtoAccountIU.getIban());
+            dbAccount.setCurrencyType(dtoAccountIU.getCurrencyType());
+            Account updateAccount = accountRepository.save(dbAccount);
+            BeanUtils.copyProperties(updateAccount, dtoAccount);
+            return dtoAccount;
+        }
+        return null;
+    }
 }

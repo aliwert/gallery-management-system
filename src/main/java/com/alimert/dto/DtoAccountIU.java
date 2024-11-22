@@ -22,7 +22,6 @@ public class DtoAccountIU {
     @NotNull
     private BigDecimal amount;
 
-
     @NotNull
     private CurrencyType currencyType;
 }
