@@ -37,4 +37,18 @@ public class AddressControllerImpl extends BaseController implements IAddressCon
     public RootEntity<List<DtoAddress>> findAllAddresses() {
         return ok(addressService.getAllAddresses());
     }
+
+    @Override
+    @PutMapping("/update/{id}")
+    public RootEntity<DtoAddress> updateAddress(@PathVariable(name = "id") Long id, @RequestBody DtoAddressIU dtoAddressIU) {
+
+        return ok(addressService.updateAddress(id, dtoAddressIU));
+    }
+
+    @Override
+    @DeleteMapping("/delete/{id}")
+    public RootEntity<Void> deleteAddress(@PathVariable(name = "id") Long id) {
+        addressService.deleteAddress(id);
+        return ok(null);
+    }
 }

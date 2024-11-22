@@ -10,4 +10,6 @@ public interface IAddressController {
     public RootEntity<DtoAddress> saveAddress(DtoAddressIU dtoAddressIU);
     public RootEntity<DtoAddress> findAddressById(Long id);
     public RootEntity<List<DtoAddress>> findAllAddresses();
+    public RootEntity<DtoAddress> updateAddress(Long id, DtoAddressIU dtoAddressIU);
+    public RootEntity<Void> deleteAddress(Long id);
 }
