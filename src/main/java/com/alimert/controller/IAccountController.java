@@ -13,4 +13,5 @@ public interface IAccountController {
     public RootEntity<DtoAccount> findAccountById(Long id);
     public RootEntity<List<DtoAccount>> findAllAccounts();
     public RootEntity<DtoAccount> updateAccount(Long id, DtoAccountIU dtoAccountIU);
+    public RootEntity<Void> deleteAccount(Long id);
 }

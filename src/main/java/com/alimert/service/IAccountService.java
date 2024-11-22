@@ -1,5 +1,6 @@
 package com.alimert.service;
 
+import com.alimert.controller.RootEntity;
 import com.alimert.dto.DtoAccount;
 import com.alimert.dto.DtoAccountIU;
 
@@ -11,4 +12,5 @@ public interface IAccountService {
     public DtoAccount findAccountById(Long id);
     public List<DtoAccount> findAllAccounts();
     public DtoAccount updateAccount(Long id, DtoAccountIU dtoAccountIU);
+    public RootEntity<Void> deleteAccount(Long id);
 }

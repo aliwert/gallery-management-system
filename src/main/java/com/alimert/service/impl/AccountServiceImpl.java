@@ -1,10 +1,15 @@
 package com.alimert.service.impl;
 
+import com.alimert.controller.RootEntity;
 import com.alimert.dto.DtoAccount;
 import com.alimert.dto.DtoAccountIU;
+import com.alimert.exception.BaseException;
+import com.alimert.exception.ErrorMessage;
+import com.alimert.exception.MessageType;
 import com.alimert.model.Account;
 import com.alimert.repository.AccountRepository;
 import com.alimert.service.IAccountService;
+import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,6 +84,17 @@ public class AccountServiceImpl implements IAccountService {
             Account updateAccount = accountRepository.save(dbAccount);
             BeanUtils.copyProperties(updateAccount, dtoAccount);
             return dtoAccount;
+        }
+        return null;
+    }
+
+    @Override
+    public RootEntity<Void> deleteAccount(Long id) {
+        Optional<Account> optAccount = accountRepository.findById(id);
+        if(optAccount != null) {
+            accountRepository.deleteById(id);
+        } else {
+            throw new OpenApiResourceNotFoundException("Account not found");
         }
         return null;
     }

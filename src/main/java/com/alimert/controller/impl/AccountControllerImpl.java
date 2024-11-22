@@ -45,4 +45,11 @@ public class AccountControllerImpl extends BaseController implements IAccountCon
     public RootEntity<DtoAccount> updateAccount(@PathVariable(name = "id") Long id, @RequestBody DtoAccountIU dtoAccountIU) {
         return ok(accountService.updateAccount(id, dtoAccountIU));
     }
+
+    @Override
+    @DeleteMapping("/delete/{id}")
+    public RootEntity<Void> deleteAccount(@PathVariable(name = "id") Long id) {
+        accountService.deleteAccount(id);
+        return ok(null);
+    }
 }
