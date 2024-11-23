@@ -89,10 +89,15 @@ public class CustomerServiceImpl implements ICustomerService {
                 BeanUtils.copyProperties(customer, dtoCustomer);
 
                 DtoAccount dtoAccount = new DtoAccount();
+                dtoAccount.setId(customer.getAccount().getId());
                 dtoAccount.setCurrencyType(customer1.getAccount().getCurrencyType());
                 dtoAccount.setIban(customer1.getAccount().getIban());
+                dtoAccount.setCreateTime(customer1.getAccount().getCreateTime());
+                dtoAccount.setAmount(customer1.getAccount().getAmount());
+                dtoAccount.setCurrencyType(customer1.getAccount().getCurrencyType());
+                dtoAccount.setIban(customer1.getAccount().getIban());
+                dtoAccount.setCreateTime(customer1.getAccount().getCreateTime());
                 dtoCustomer.setAccount(dtoAccount);
-
 
 
                 DtoAddress dtoAddress = new DtoAddress();

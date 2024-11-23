@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rest/api/gallerist")
 public class GalleristControllerImpl extends BaseController implements IGalleristController {
@@ -22,6 +24,12 @@ public class GalleristControllerImpl extends BaseController implements IGalleris
     @Override
     public RootEntity<DtoGallerist> saveGallerist(@Valid @RequestBody DtoGalleristIU dtoGalleristIU) {
         return ok(galleristService.saveGallerist(dtoGalleristIU));
+    }
+
+    @Override
+    @GetMapping("/list")
+    public RootEntity<List<DtoGallerist>> getAllGallerist() {
+        return ok(galleristService.getAllGallerist());
     }
 
     @Override

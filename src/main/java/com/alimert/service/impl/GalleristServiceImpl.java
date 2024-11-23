@@ -16,7 +16,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,6 +54,28 @@ public class GalleristServiceImpl implements IGalleristService {
         BeanUtils.copyProperties(savedGallerist.getAddress(), dtoAddress);
         dtoGallerist.setAddress(dtoAddress);
         return dtoGallerist;
+    }
+
+    @Override
+    public List<DtoGallerist> getAllGallerist() {
+        List<DtoGallerist> dtoGallerists = new ArrayList<>();
+        List<Gallerist> galleristList = galleristRepository.findAll();
+        if (!galleristList.isEmpty()) {
+            for (Gallerist gallerist : galleristList) {
+                DtoGallerist dtoGallerist = new DtoGallerist();
+                BeanUtils.copyProperties(gallerist, dtoGallerist);
+                galleristList.get(galleristList.indexOf(gallerist));
+
+                DtoAddress dtoAddress = new DtoAddress();
+                dtoAddress.setDistrict(gallerist.getAddress().getDistrict());
+                dtoAddress.setCity(gallerist.getAddress().getCity());
+                dtoAddress.setStreet(gallerist.getAddress().getStreet());
+                dtoAddress.setNeighborhood(gallerist.getAddress().getNeighborhood());
+                dtoGallerist.setAddress(dtoAddress);
+                dtoGallerists.add(dtoGallerist);
+            }
+        }
+        return dtoGallerists;
     }
 
     @Override
