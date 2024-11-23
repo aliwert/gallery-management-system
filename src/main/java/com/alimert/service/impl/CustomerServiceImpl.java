@@ -82,10 +82,21 @@ public class CustomerServiceImpl implements ICustomerService {
     public List<DtoCustomer> getAllCustomers() {
         List<DtoCustomer> dtoCustomers = new ArrayList<>();
         List<Customer> customerList = customerRepository.findAll();
+        List<Customer> allCustomers = customerRepository.findAll();
         if (!customerList.isEmpty() && customerList != null) {
             for (Customer customer : customerList) {
                 DtoCustomer dtoCustomer = new DtoCustomer();
+                Customer customer1 = allCustomers.get(allCustomers.indexOf(customer));
                 BeanUtils.copyProperties(customer, dtoCustomer);
+                DtoAddress dtoAddress = new DtoAddress();
+                dtoAddress.setCity(customer1.getAddress().getCity());
+                dtoAddress.setId(customer1.getAddress().getId());
+                dtoAddress.setStreet(customer1.getAddress().getStreet());
+                dtoAddress.setNeighborhood(customer1.getAddress().getNeighborhood());
+                dtoAddress.setCreateTime(customer1.getCreateTime());
+
+                dtoCustomer.setAddress(dtoAddress);
+
                 dtoCustomers.add(dtoCustomer);
             }
         }
