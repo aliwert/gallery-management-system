@@ -25,4 +25,5 @@ public class DtoCar extends DtoBase {
     private BigDecimal damagePrice;
 
     private CarStatusType carStatusType;
+
 }

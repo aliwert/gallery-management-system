@@ -53,4 +53,27 @@ public class GalleristServiceImpl implements IGalleristService {
         dtoGallerist.setAddress(dtoAddress);
         return dtoGallerist;
     }
+
+    @Override
+    public DtoGallerist getGalleristById(Long id) {
+        DtoGallerist dtoGallerist = new DtoGallerist();
+        Optional<Gallerist> optGallerist = galleristRepository.findById(id);
+        if (optGallerist.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+        }
+        Gallerist gallerist = optGallerist.get();
+        BeanUtils.copyProperties(gallerist, dtoGallerist);
+
+        DtoAddress dtoAddress = new DtoAddress();
+        dtoAddress.setId(gallerist.getAddress().getId());
+        dtoAddress.setCity(gallerist.getAddress().getCity());
+        dtoAddress.setDistrict(gallerist.getAddress().getDistrict());
+        dtoAddress.setStreet(gallerist.getAddress().getStreet());
+        dtoAddress.setCreateTime(gallerist.getAddress().getCreateTime());
+        dtoAddress.setNeighborhood(gallerist.getAddress().getNeighborhood());
+
+        dtoGallerist.setAddress(dtoAddress);
+
+        return dtoGallerist;
+    }
 }

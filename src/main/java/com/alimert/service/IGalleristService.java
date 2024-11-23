@@ -6,4 +6,6 @@ import com.alimert.dto.DtoGalleristIU;
 public interface IGalleristService {
 
     public DtoGallerist saveGallerist(DtoGalleristIU dtoGalleristIU);
+
+    public DtoGallerist getGalleristById(Long id);
 }

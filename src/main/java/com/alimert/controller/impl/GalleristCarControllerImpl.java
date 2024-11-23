@@ -8,10 +8,9 @@ import com.alimert.dto.DtoGalleristCarIU;
 import com.alimert.service.IGalleristCarService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/rest/api/gallerist-car")
@@ -26,4 +25,5 @@ public class GalleristCarControllerImpl extends BaseController implements IGalle
     public RootEntity<DtoGalleristCar> saveGalleristCar(@Valid @RequestBody DtoGalleristCarIU dto) {
         return ok(galleristCarService.saveGalleristCar(dto));
     }
+
 }
