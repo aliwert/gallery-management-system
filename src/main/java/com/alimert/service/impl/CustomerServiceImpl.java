@@ -18,7 +18,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -72,6 +74,32 @@ public class CustomerServiceImpl implements ICustomerService {
         dtoCustomer.setAccount(dtoAccount);
 
 
+        return dtoCustomer;
+    }
+
+    @Override
+    public List<DtoCustomer> getAllCustomers() {
+        List<DtoCustomer> dtoCustomers = new ArrayList<>();
+        List<Customer> customerList = customerRepository.findAll();
+        if (!customerList.isEmpty() && customerList != null) {
+            for (Customer customer : customerList) {
+                DtoCustomer dtoCustomer = new DtoCustomer();
+                BeanUtils.copyProperties(customer, dtoCustomer);
+                dtoCustomers.add(dtoCustomer);
+            }
+        }
+        return dtoCustomers;
+    }
+
+    @Override
+    public DtoCustomer getCustomerById(Long id) {
+        Optional<Customer> optCustomer = customerRepository.findById(id);
+        if (optCustomer.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+        }
+        DtoCustomer dtoCustomer = new DtoCustomer();
+        Customer customer = optCustomer.get();
+        BeanUtils.copyProperties(customer, dtoCustomer);
         return dtoCustomer;
     }
 }

@@ -8,9 +8,9 @@ import com.alimert.dto.DtoCustomerIU;
 import com.alimert.service.ICustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/rest/api/customer")
@@ -24,5 +24,17 @@ public class CustomerControllerImpl extends BaseController implements ICustomerC
     @Override
     public RootEntity<DtoCustomer> saveCustomer(@Valid @RequestBody DtoCustomerIU dtoCustomerIU) {
         return ok(customerService.saveCustomer(dtoCustomerIU));
+    }
+
+    @Override
+    @GetMapping("/list")
+    public RootEntity<List<DtoCustomer>> getAllCustomers() {
+        return ok(customerService.getAllCustomers());
+    }
+
+    @Override
+    @GetMapping("/list/{id}")
+    public RootEntity<DtoCustomer> getCustomerById(@PathVariable(name = "id") Long id) {
+        return ok(customerService.getCustomerById(id));
     }
 }
