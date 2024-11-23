@@ -82,19 +82,28 @@ public class CustomerServiceImpl implements ICustomerService {
     public List<DtoCustomer> getAllCustomers() {
         List<DtoCustomer> dtoCustomers = new ArrayList<>();
         List<Customer> customerList = customerRepository.findAll();
-        List<Customer> allCustomers = customerRepository.findAll();
-        if (!customerList.isEmpty() && customerList != null) {
+        if (!customerList.isEmpty()) {
             for (Customer customer : customerList) {
                 DtoCustomer dtoCustomer = new DtoCustomer();
-                Customer customer1 = allCustomers.get(allCustomers.indexOf(customer));
+                Customer customer1 = customerList.get(customerList.indexOf(customer));
                 BeanUtils.copyProperties(customer, dtoCustomer);
+
+                DtoAccount dtoAccount = new DtoAccount();
+                dtoAccount.setCurrencyType(customer1.getAccount().getCurrencyType());
+                dtoAccount.setIban(customer1.getAccount().getIban());
+                dtoCustomer.setAccount(dtoAccount);
+
+
+
                 DtoAddress dtoAddress = new DtoAddress();
                 dtoAddress.setCity(customer1.getAddress().getCity());
+                dtoAddress.setDistrict(customer1.getAddress().getDistrict());
                 dtoAddress.setId(customer1.getAddress().getId());
                 dtoAddress.setStreet(customer1.getAddress().getStreet());
                 dtoAddress.setNeighborhood(customer1.getAddress().getNeighborhood());
                 dtoAddress.setCreateTime(customer1.getCreateTime());
 
+                dtoCustomer.setAccount(dtoAccount);
                 dtoCustomer.setAddress(dtoAddress);
 
                 dtoCustomers.add(dtoCustomer);
@@ -105,13 +114,34 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public DtoCustomer getCustomerById(Long id) {
+        DtoCustomer dtoCustomer = new DtoCustomer();
         Optional<Customer> optCustomer = customerRepository.findById(id);
         if (optCustomer.isEmpty()) {
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
-        DtoCustomer dtoCustomer = new DtoCustomer();
         Customer customer = optCustomer.get();
         BeanUtils.copyProperties(customer, dtoCustomer);
+
+        DtoAccount dtoAccount = new DtoAccount();
+        dtoAccount.setId(customer.getAccount().getId());
+        dtoAccount.setAccountNo(customer.getAccount().getAccountNo());
+        dtoAccount.setIban(customer.getAccount().getIban());
+        dtoAccount.setAmount(customer.getAccount().getAmount());
+        dtoAccount.setCurrencyType(customer.getAccount().getCurrencyType());
+        dtoAccount.setCreateTime(customer.getCreateTime());
+
+        DtoAddress dtoAddress = new DtoAddress();
+        dtoAddress.setCity(customer.getAddress().getCity());
+        dtoAddress.setDistrict(customer.getAddress().getDistrict());
+        dtoAddress.setId(customer.getAddress().getId());
+        dtoAddress.setStreet(customer.getAddress().getStreet());
+        dtoAddress.setNeighborhood(customer.getAddress().getNeighborhood());
+        dtoAddress.setCreateTime(customer.getCreateTime());
+
+        dtoCustomer.setAccount(dtoAccount);
+        dtoCustomer.setAddress(dtoAddress);
+
+
         return dtoCustomer;
     }
 
