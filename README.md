@@ -16,3 +16,8 @@ spring.jpa.properties.hibernate.format_sql=true
 ```
 spring.jpa.hibernate.ddl-auto=update
 ```
+
+## Need to do
+- First, you need to go to ``` http://localhost:8080/register``` and sign up. A username and passowrd are sufficient.
+- Secondly, to obtain an access token, go to ```http://localhost:8080/authenticate```, enter your username and password, and after receiving the access token, you can perform CRUD operations by visiting any URL within the project.
+- Finally, I should mention that when your access token expires, you need to go to ```http://localhost:8080/refreshtoken``` and obtain a new access token using the refresh token.
