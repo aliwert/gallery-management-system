@@ -1,5 +1,6 @@
 package com.alimert.service.impl;
 
+import com.alimert.controller.RootEntity;
 import com.alimert.dto.DtoAccount;
 import com.alimert.dto.DtoAddress;
 import com.alimert.dto.DtoCustomer;
@@ -118,6 +119,18 @@ public class CustomerServiceImpl implements ICustomerService {
             Customer updateCustomer = customerRepository.save(dbCustomer);
             BeanUtils.copyProperties(updateCustomer, dtoCustomer);
             return dtoCustomer;
+        }
+        return null;
+    }
+
+    @Override
+    public RootEntity<Void> deleteCustomer(Long id) {
+        Optional<Customer> optCustomer = customerRepository.findById(id);
+        if (optCustomer.isPresent()) {
+            accountRepository.deleteById(id);
+            customerRepository.deleteById(id);
+        } else {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
         return null;
     }

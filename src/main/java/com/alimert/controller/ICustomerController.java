@@ -14,4 +14,6 @@ public interface ICustomerController {
     public RootEntity<DtoCustomer> getCustomerById(Long id);
 
     public RootEntity<DtoCustomer> updateCustomer(Long id, DtoCustomerIU dtoCustomerIU);
+
+    public RootEntity<Void> deleteCustomer(Long id);
 }

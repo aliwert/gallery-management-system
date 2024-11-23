@@ -1,5 +1,6 @@
 package com.alimert.service;
 
+import com.alimert.controller.RootEntity;
 import com.alimert.dto.DtoCustomer;
 import com.alimert.dto.DtoCustomerIU;
 
@@ -13,4 +14,6 @@ public interface ICustomerService {
     public DtoCustomer getCustomerById(Long id);
 
     public DtoCustomer updateCustomer(Long id, DtoCustomerIU dtoCustomerIU);
+
+    public RootEntity<Void> deleteCustomer(Long id);
 }

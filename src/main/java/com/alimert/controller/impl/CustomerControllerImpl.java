@@ -43,4 +43,11 @@ public class CustomerControllerImpl extends BaseController implements ICustomerC
     public RootEntity<DtoCustomer> updateCustomer(@PathVariable(name = "id") Long id, @RequestBody DtoCustomerIU dtoCustomerIU) {
         return ok(customerService.updateCustomer(id, dtoCustomerIU));
     }
+
+    @Override
+    @DeleteMapping("/delete/{id}")
+    public RootEntity<Void> deleteCustomer(@PathVariable(name = "id") Long id) {
+        customerService.deleteCustomer(id);
+        return ok(null);
+    }
 }

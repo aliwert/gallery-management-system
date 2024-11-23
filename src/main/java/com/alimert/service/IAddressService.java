@@ -9,8 +9,12 @@ import java.util.List;
 public interface IAddressService {
 
     public DtoAddress saveAddress(DtoAddressIU address);
+
     public DtoAddress getAddressById(Long id);
+
     public List<DtoAddress> getAllAddresses();
+
     public DtoAddress updateAddress(Long id, DtoAddressIU dtoAddressIU);
+
     public RootEntity<Void> deleteAddress(Long id);
 }
