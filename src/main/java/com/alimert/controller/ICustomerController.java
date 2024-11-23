@@ -12,4 +12,6 @@ public interface ICustomerController {
     public RootEntity<List<DtoCustomer>> getAllCustomers();
 
     public RootEntity<DtoCustomer> getCustomerById(Long id);
+
+    public RootEntity<DtoCustomer> updateCustomer(Long id, DtoCustomerIU dtoCustomerIU);
 }

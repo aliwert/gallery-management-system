@@ -37,4 +37,10 @@ public class CustomerControllerImpl extends BaseController implements ICustomerC
     public RootEntity<DtoCustomer> getCustomerById(@PathVariable(name = "id") Long id) {
         return ok(customerService.getCustomerById(id));
     }
+
+    @Override
+    @PutMapping("/update/{id}")
+    public RootEntity<DtoCustomer> updateCustomer(@PathVariable(name = "id") Long id, @RequestBody DtoCustomerIU dtoCustomerIU) {
+        return ok(customerService.updateCustomer(id, dtoCustomerIU));
+    }
 }

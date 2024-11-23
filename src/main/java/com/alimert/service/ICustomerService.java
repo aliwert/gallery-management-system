@@ -11,4 +11,6 @@ public interface ICustomerService {
     public List<DtoCustomer> getAllCustomers();
 
     public DtoCustomer getCustomerById(Long id);
+
+    public DtoCustomer updateCustomer(Long id, DtoCustomerIU dtoCustomerIU);
 }

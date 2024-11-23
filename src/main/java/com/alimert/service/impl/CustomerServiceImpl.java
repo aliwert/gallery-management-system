@@ -102,4 +102,23 @@ public class CustomerServiceImpl implements ICustomerService {
         BeanUtils.copyProperties(customer, dtoCustomer);
         return dtoCustomer;
     }
+
+    @Override
+    public DtoCustomer updateCustomer(Long id, DtoCustomerIU dtoCustomerIU) {
+        DtoCustomer dtoCustomer = new DtoCustomer();
+        Optional<Customer> optCustomer = customerRepository.findById(id);
+        if (optCustomer.isPresent()) {
+            Customer dbCustomer = optCustomer.get();
+            dbCustomer.setTckn(dtoCustomerIU.getTckn());
+            dbCustomer.setAddress(addressRepository.findById(dtoCustomerIU.getAddressId()).get());
+            dbCustomer.setAccount(accountRepository.findById(dtoCustomerIU.getAccountId()).get());
+            dbCustomer.setBirthOfDate(dtoCustomerIU.getBirthOfDate());
+            dbCustomer.setFirstName(dtoCustomerIU.getFirstName());
+            dbCustomer.setLastName(dtoCustomerIU.getLastName());
+            Customer updateCustomer = customerRepository.save(dbCustomer);
+            BeanUtils.copyProperties(updateCustomer, dtoCustomer);
+            return dtoCustomer;
+        }
+        return null;
+    }
 }
