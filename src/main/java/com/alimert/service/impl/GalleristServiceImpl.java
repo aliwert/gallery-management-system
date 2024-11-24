@@ -60,6 +60,7 @@ public class GalleristServiceImpl implements IGalleristService {
     public List<DtoGallerist> getAllGallerist() {
         List<DtoGallerist> dtoGallerists = new ArrayList<>();
         List<Gallerist> galleristList = galleristRepository.findAll();
+
         if (!galleristList.isEmpty()) {
             for (Gallerist gallerist : galleristList) {
                 DtoGallerist dtoGallerist = new DtoGallerist();

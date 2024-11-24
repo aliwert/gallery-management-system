@@ -3,6 +3,9 @@ package com.alimert.service.impl;
 import com.alimert.controller.RootEntity;
 import com.alimert.dto.DtoCar;
 import com.alimert.dto.DtoCarIU;
+import com.alimert.exception.BaseException;
+import com.alimert.exception.ErrorMessage;
+import com.alimert.exception.MessageType;
 import com.alimert.model.Account;
 import com.alimert.model.Car;
 import com.alimert.repository.CarRepository;
@@ -45,7 +48,7 @@ public class CarServiceImpl implements ICarService {
         DtoCar dtoCar = new DtoCar();
         Optional<Car> optCar = carRepository.findById(id);
         if (optCar.isEmpty()) {
-            return null;
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
         Car car = optCar.get();
         BeanUtils.copyProperties(car, dtoCar);
@@ -71,31 +74,30 @@ public class CarServiceImpl implements ICarService {
     public DtoCar updateCar(Long id, DtoCarIU dtoCarIU) {
         DtoCar dtoCar = new DtoCar();
         Optional<Car> optCar = carRepository.findById(id);
-        if (optCar.isPresent()) {
-            Car dbCar = optCar.get();
-            dbCar.setBrand(dtoCarIU.getBrand());
-            dbCar.setModel(dtoCarIU.getModel());
-            dbCar.setPrice(dtoCarIU.getPrice());
-            dbCar.setPlate(dtoCarIU.getPlate());
-            dbCar.setCarStatusType(dtoCarIU.getCarStatusType());
-            dbCar.setProductionYear(dtoCarIU.getProductionYear());
-            dbCar.setDamagePrice(dtoCarIU.getDamagePrice());
-            dbCar.setCurrencyType(dtoCarIU.getCurrencyType());
-            Car updateAccount = carRepository.save(dbCar);
-            BeanUtils.copyProperties(updateAccount, dtoCar);
-            return dtoCar;
+        if (optCar.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
-        return null;
+        Car dbCar = optCar.get();
+        dbCar.setBrand(dtoCarIU.getBrand());
+        dbCar.setModel(dtoCarIU.getModel());
+        dbCar.setPrice(dtoCarIU.getPrice());
+        dbCar.setPlate(dtoCarIU.getPlate());
+        dbCar.setCarStatusType(dtoCarIU.getCarStatusType());
+        dbCar.setProductionYear(dtoCarIU.getProductionYear());
+        dbCar.setDamagePrice(dtoCarIU.getDamagePrice());
+        dbCar.setCurrencyType(dtoCarIU.getCurrencyType());
+        Car updateAccount = carRepository.save(dbCar);
+        BeanUtils.copyProperties(updateAccount, dtoCar);
+        return dtoCar;
     }
 
     @Override
     public RootEntity<Void> deleteCar(Long id) {
         Optional<Car> optCar = carRepository.findById(id);
-        if (optCar != null) {
-            carRepository.deleteById(id);
-        }else {
-            throw new OpenApiResourceNotFoundException("Car not found");
+        if (optCar.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
+        carRepository.deleteById(id);
         return null;
     }
 }

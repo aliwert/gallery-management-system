@@ -3,6 +3,9 @@ package com.alimert.service.impl;
 import com.alimert.controller.RootEntity;
 import com.alimert.dto.DtoAddress;
 import com.alimert.dto.DtoAddressIU;
+import com.alimert.exception.BaseException;
+import com.alimert.exception.ErrorMessage;
+import com.alimert.exception.MessageType;
 import com.alimert.model.Address;
 import com.alimert.repository.AddressRepository;
 import com.alimert.service.IAddressService;
@@ -44,7 +47,7 @@ public class AddressServiceImpl implements IAddressService {
         DtoAddress dtoAddress = new DtoAddress();
         Optional<Address> optAddress = addressRepository.findById(id);
         if (optAddress.isEmpty()) {
-            return null;
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
         Address address = optAddress.get();
         BeanUtils.copyProperties(address, dtoAddress);
@@ -70,28 +73,26 @@ public class AddressServiceImpl implements IAddressService {
     public DtoAddress updateAddress(Long id, DtoAddressIU dtoAddressIU) {
         DtoAddress dtoAddress = new DtoAddress();
         Optional<Address> optAddress = addressRepository.findById(id);
-        if (optAddress.isPresent()) {
-            Address dbAddress = optAddress.get();
-            dbAddress.setCity(dtoAddressIU.getCity());
-            dbAddress.setDistrict(dtoAddressIU.getDistrict());
-            dbAddress.setNeighborhood(dtoAddressIU.getNeighborhood());
-            dbAddress.setStreet(dtoAddressIU.getStreet());
-            Address address = addressRepository.save(dbAddress);
-            BeanUtils.copyProperties(address, dtoAddress);
-            return dtoAddress;
+        if (optAddress.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
-        return null;
+        Address dbAddress = optAddress.get();
+        dbAddress.setCity(dtoAddressIU.getCity());
+        dbAddress.setDistrict(dtoAddressIU.getDistrict());
+        dbAddress.setNeighborhood(dtoAddressIU.getNeighborhood());
+        dbAddress.setStreet(dtoAddressIU.getStreet());
+        Address address = addressRepository.save(dbAddress);
+        BeanUtils.copyProperties(address, dtoAddress);
+        return dtoAddress;
     }
 
     @Override
     public RootEntity<Void> deleteAddress(Long id) {
         Optional<Address> optAddress = addressRepository.findById(id);
-        if (optAddress != null) {
-            addressRepository.deleteById(id);
-        } else {
-            throw new OpenApiResourceNotFoundException("Address not found");
+        if (optAddress.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
-
+        addressRepository.deleteById(id);
 
         return null;
     }

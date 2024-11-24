@@ -48,7 +48,7 @@ public class AccountServiceImpl implements IAccountService {
         DtoAccount dtoAccount = new DtoAccount();
         Optional<Account> accOptional = accountRepository.findById(id);
         if (accOptional.isEmpty()) {
-            return null;
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
         Account account = accOptional.get();
         BeanUtils.copyProperties(account, dtoAccount);
@@ -75,27 +75,26 @@ public class AccountServiceImpl implements IAccountService {
 
         DtoAccount dtoAccount = new DtoAccount();
         Optional<Account> accOptional = accountRepository.findById(id);
-        if (accOptional.isPresent()) {
-            Account dbAccount = accOptional.get();
-            dbAccount.setAmount(dtoAccountIU.getAmount());
-            dbAccount.setAccountNo(dtoAccountIU.getAccountNo());
-            dbAccount.setIban(dtoAccountIU.getIban());
-            dbAccount.setCurrencyType(dtoAccountIU.getCurrencyType());
-            Account updateAccount = accountRepository.save(dbAccount);
-            BeanUtils.copyProperties(updateAccount, dtoAccount);
-            return dtoAccount;
+        if (accOptional.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
-        return null;
+        Account dbAccount = accOptional.get();
+        dbAccount.setAmount(dtoAccountIU.getAmount());
+        dbAccount.setAccountNo(dtoAccountIU.getAccountNo());
+        dbAccount.setIban(dtoAccountIU.getIban());
+        dbAccount.setCurrencyType(dtoAccountIU.getCurrencyType());
+        Account updateAccount = accountRepository.save(dbAccount);
+        BeanUtils.copyProperties(updateAccount, dtoAccount);
+        return dtoAccount;
     }
 
     @Override
     public RootEntity<Void> deleteAccount(Long id) {
         Optional<Account> optAccount = accountRepository.findById(id);
-        if(optAccount != null) {
-            accountRepository.deleteById(id);
-        } else {
-            throw new OpenApiResourceNotFoundException("Account not found");
+        if (optAccount.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
+        accountRepository.deleteById(id);
         return null;
     }
 }

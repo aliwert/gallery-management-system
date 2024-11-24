@@ -85,28 +85,29 @@ public class CustomerServiceImpl implements ICustomerService {
         if (!customerList.isEmpty()) {
             for (Customer customer : customerList) {
                 DtoCustomer dtoCustomer = new DtoCustomer();
-                Customer customer1 = customerList.get(customerList.indexOf(customer));
                 BeanUtils.copyProperties(customer, dtoCustomer);
+                customerList.get(customerList.indexOf(customer));
+
 
                 DtoAccount dtoAccount = new DtoAccount();
                 dtoAccount.setId(customer.getAccount().getId());
-                dtoAccount.setCurrencyType(customer1.getAccount().getCurrencyType());
-                dtoAccount.setIban(customer1.getAccount().getIban());
-                dtoAccount.setCreateTime(customer1.getAccount().getCreateTime());
-                dtoAccount.setAmount(customer1.getAccount().getAmount());
-                dtoAccount.setCurrencyType(customer1.getAccount().getCurrencyType());
-                dtoAccount.setIban(customer1.getAccount().getIban());
-                dtoAccount.setCreateTime(customer1.getAccount().getCreateTime());
+                dtoAccount.setCurrencyType(customer.getAccount().getCurrencyType());
+                dtoAccount.setIban(customer.getAccount().getIban());
+                dtoAccount.setCreateTime(customer.getAccount().getCreateTime());
+                dtoAccount.setAmount(customer.getAccount().getAmount());
+                dtoAccount.setCurrencyType(customer.getAccount().getCurrencyType());
+                dtoAccount.setIban(customer.getAccount().getIban());
+                dtoAccount.setCreateTime(customer.getAccount().getCreateTime());
                 dtoCustomer.setAccount(dtoAccount);
 
 
                 DtoAddress dtoAddress = new DtoAddress();
-                dtoAddress.setCity(customer1.getAddress().getCity());
-                dtoAddress.setDistrict(customer1.getAddress().getDistrict());
-                dtoAddress.setId(customer1.getAddress().getId());
-                dtoAddress.setStreet(customer1.getAddress().getStreet());
-                dtoAddress.setNeighborhood(customer1.getAddress().getNeighborhood());
-                dtoAddress.setCreateTime(customer1.getCreateTime());
+                dtoAddress.setCity(customer.getAddress().getCity());
+                dtoAddress.setDistrict(customer.getAddress().getDistrict());
+                dtoAddress.setId(customer.getAddress().getId());
+                dtoAddress.setStreet(customer.getAddress().getStreet());
+                dtoAddress.setNeighborhood(customer.getAddress().getNeighborhood());
+                dtoAddress.setCreateTime(customer.getCreateTime());
 
                 dtoCustomer.setAccount(dtoAccount);
                 dtoCustomer.setAddress(dtoAddress);
@@ -154,30 +155,29 @@ public class CustomerServiceImpl implements ICustomerService {
     public DtoCustomer updateCustomer(Long id, DtoCustomerIU dtoCustomerIU) {
         DtoCustomer dtoCustomer = new DtoCustomer();
         Optional<Customer> optCustomer = customerRepository.findById(id);
-        if (optCustomer.isPresent()) {
-            Customer dbCustomer = optCustomer.get();
-            dbCustomer.setTckn(dtoCustomerIU.getTckn());
-            dbCustomer.setAddress(addressRepository.findById(dtoCustomerIU.getAddressId()).get());
-            dbCustomer.setAccount(accountRepository.findById(dtoCustomerIU.getAccountId()).get());
-            dbCustomer.setBirthOfDate(dtoCustomerIU.getBirthOfDate());
-            dbCustomer.setFirstName(dtoCustomerIU.getFirstName());
-            dbCustomer.setLastName(dtoCustomerIU.getLastName());
-            Customer updateCustomer = customerRepository.save(dbCustomer);
-            BeanUtils.copyProperties(updateCustomer, dtoCustomer);
-            return dtoCustomer;
+        if (optCustomer.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
-        return null;
+        Customer dbCustomer = optCustomer.get();
+        dbCustomer.setTckn(dtoCustomerIU.getTckn());
+        dbCustomer.setAddress(addressRepository.findById(dtoCustomerIU.getAddressId()).get());
+        dbCustomer.setAccount(accountRepository.findById(dtoCustomerIU.getAccountId()).get());
+        dbCustomer.setBirthOfDate(dtoCustomerIU.getBirthOfDate());
+        dbCustomer.setFirstName(dtoCustomerIU.getFirstName());
+        dbCustomer.setLastName(dtoCustomerIU.getLastName());
+        Customer updateCustomer = customerRepository.save(dbCustomer);
+        BeanUtils.copyProperties(updateCustomer, dtoCustomer);
+        return dtoCustomer;
     }
 
     @Override
     public RootEntity<Void> deleteCustomer(Long id) {
         Optional<Customer> optCustomer = customerRepository.findById(id);
-        if (optCustomer.isPresent()) {
-            accountRepository.deleteById(id);
-            customerRepository.deleteById(id);
-        } else {
+        if (optCustomer.isEmpty()) {
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
         }
+        customerRepository.deleteById(id);
+
         return null;
     }
 }
