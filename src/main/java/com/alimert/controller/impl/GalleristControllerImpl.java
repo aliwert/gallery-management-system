@@ -43,4 +43,11 @@ public class GalleristControllerImpl extends BaseController implements IGalleris
     public RootEntity<DtoGallerist> updateGallerist(@PathVariable(name = "id") Long id, @RequestBody DtoGalleristIU dtoGalleristIU) {
         return ok(galleristService.updateGallerist(id, dtoGalleristIU));
     }
+
+    @Override
+    @DeleteMapping("/delete/{id}")
+    public RootEntity<Void> deleteGallerist(@PathVariable(name = "id") Long id) {
+        galleristService.deleteGallerist(id);
+        return ok(null);
+    }
 }

@@ -1,6 +1,7 @@
 package com.alimert.service.impl;
 
 
+import com.alimert.controller.RootEntity;
 import com.alimert.dto.DtoAddress;
 import com.alimert.dto.DtoGallerist;
 import com.alimert.dto.DtoGalleristIU;
@@ -116,5 +117,15 @@ public class GalleristServiceImpl implements IGalleristService {
         Gallerist updatedGallerist = galleristRepository.save(dbGallerist);
         BeanUtils.copyProperties(updatedGallerist, dtoGallerist);
         return dtoGallerist;
+    }
+
+    @Override
+    public RootEntity<Void> deleteGallerist(Long id) {
+        Optional<Gallerist> optGallerist = galleristRepository.findById(id);
+        if (optGallerist.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+        }
+        galleristRepository.deleteById(id);
+        return null;
     }
 }

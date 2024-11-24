@@ -1,5 +1,6 @@
 package com.alimert.service;
 
+import com.alimert.controller.RootEntity;
 import com.alimert.dto.DtoGallerist;
 import com.alimert.dto.DtoGalleristIU;
 
@@ -14,4 +15,6 @@ public interface IGalleristService {
     public DtoGallerist getGalleristById(Long id);
 
     public DtoGallerist updateGallerist(Long id, DtoGalleristIU dtoGalleristIU);
+
+    public RootEntity<Void> deleteGallerist(Long id);
 }

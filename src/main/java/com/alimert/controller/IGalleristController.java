@@ -14,4 +14,6 @@ public interface IGalleristController {
     public RootEntity<DtoGallerist> findGalleristById(Long id);
 
     public RootEntity<DtoGallerist> updateGallerist(Long id, DtoGalleristIU dtoGalleristIU);
+
+    public RootEntity<Void> deleteGallerist(Long id);
 }
