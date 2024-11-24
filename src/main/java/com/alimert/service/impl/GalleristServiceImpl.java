@@ -101,4 +101,20 @@ public class GalleristServiceImpl implements IGalleristService {
 
         return dtoGallerist;
     }
+
+    @Override
+    public DtoGallerist updateGallerist(Long id, DtoGalleristIU dtoGalleristIU) {
+        DtoGallerist dtoGallerist = new DtoGallerist();
+        Optional<Gallerist> optGallerist = galleristRepository.findById(id);
+        if (optGallerist.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+        }
+        Gallerist dbGallerist = optGallerist.get();
+        dbGallerist.setFirstName(dtoGalleristIU.getFirstName());
+        dbGallerist.setLastName(dtoGalleristIU.getLastName());
+        dbGallerist.setCreateTime(new Date());
+        Gallerist updatedGallerist = galleristRepository.save(dbGallerist);
+        BeanUtils.copyProperties(updatedGallerist, dtoGallerist);
+        return dtoGallerist;
+    }
 }

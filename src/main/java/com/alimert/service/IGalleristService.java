@@ -12,4 +12,6 @@ public interface IGalleristService {
     public List<DtoGallerist> getAllGallerist();
 
     public DtoGallerist getGalleristById(Long id);
+
+    public DtoGallerist updateGallerist(Long id, DtoGalleristIU dtoGalleristIU);
 }
