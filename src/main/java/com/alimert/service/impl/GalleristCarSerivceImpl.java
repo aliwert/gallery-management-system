@@ -94,7 +94,6 @@ public class GalleristCarSerivceImpl implements IGalleristCarService {
 
         DtoCar dtoCar = new DtoCar();
         dtoCar.setId(galleristCar.getCar().getId());
-        dtoCar.setId(galleristCar.getCar().getId());
         dtoCar.setPlate(galleristCar.getCar().getPlate());
         dtoCar.setBrand(galleristCar.getCar().getBrand());
         dtoCar.setModel(galleristCar.getCar().getModel());
@@ -107,5 +106,46 @@ public class GalleristCarSerivceImpl implements IGalleristCarService {
         dtoGalleristCar.setCar(dtoCar);
 
         return dtoGalleristCar;
+    }
+
+    @Override
+    public List<DtoGalleristCar> getAllGalleristCar() {
+
+        List<DtoGalleristCar> dtoGalleristCarList = new ArrayList<>();
+        List<GalleristCar> galleristCarList = galleristCarRepository.findAll();
+        if (!galleristCarList.isEmpty()) {
+            for (GalleristCar galleristCar : galleristCarList) {
+                DtoGalleristCar dtoGalleristCar = new DtoGalleristCar();
+                BeanUtils.copyProperties(galleristCar, dtoGalleristCar);
+                galleristCarList.get(galleristCarList.indexOf(galleristCar));
+
+
+                DtoGallerist dtoGallerist = new DtoGallerist();
+                dtoGallerist.setId(galleristCar.getGallerist().getId());
+                dtoGallerist.setFirstName(galleristCar.getGallerist().getFirstName());
+                dtoGallerist.setLastName(galleristCar.getGallerist().getLastName());
+                dtoGallerist.setAddress(dtoGallerist.getAddress());
+
+                DtoCar dtoCar = new DtoCar();
+                dtoCar.setId(galleristCar.getCar().getId());
+                dtoCar.setCarStatusType(galleristCar.getCar().getCarStatusType());
+                dtoCar.setPrice(galleristCar.getCar().getPrice());
+                dtoCar.setDamagePrice(galleristCar.getCar().getDamagePrice());
+                dtoCar.setCurrencyType(galleristCar.getCar().getCurrencyType());
+                dtoCar.setModel(galleristCar.getCar().getModel());
+                dtoCar.setBrand(galleristCar.getCar().getBrand());
+                dtoCar.setCreateTime(galleristCar.getCar().getCreateTime());
+
+                dtoGalleristCar.setGallerist(dtoGallerist);
+                dtoGalleristCar.setCar(dtoCar);
+                dtoGalleristCarList.add(dtoGalleristCar);
+                return dtoGalleristCarList;
+
+
+            }
+        }
+
+
+        return List.of();
     }
 }

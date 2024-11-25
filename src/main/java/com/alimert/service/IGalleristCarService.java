@@ -12,4 +12,6 @@ public interface IGalleristCarService {
 
     public DtoGalleristCar getGalleristCarById(Long id);
 
+    public List<DtoGalleristCar> getAllGalleristCar();
+
 }

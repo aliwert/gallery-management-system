@@ -32,4 +32,11 @@ public class GalleristCarControllerImpl extends BaseController implements IGalle
         return ok(galleristCarService.getGalleristCarById(id));
     }
 
+    @Override
+    @GetMapping("/list")
+    public RootEntity<List<DtoGalleristCar>> getAllGalleristCar() {
+
+        return ok(galleristCarService.getAllGalleristCar());
+    }
+
 }
