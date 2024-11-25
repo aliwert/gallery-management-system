@@ -1,5 +1,6 @@
 package com.alimert.service.impl;
 
+import com.alimert.controller.RootEntity;
 import com.alimert.dto.*;
 import com.alimert.exception.BaseException;
 import com.alimert.exception.ErrorMessage;
@@ -147,5 +148,35 @@ public class GalleristCarSerivceImpl implements IGalleristCarService {
 
 
         return List.of();
+    }
+
+    @Override
+    public DtoGalleristCar updateGalleristCar(Long id, DtoGalleristCarIU dtoGalleristIU) {
+
+        DtoGalleristCar dtoGalleristCar = new DtoGalleristCar();
+        Optional<GalleristCar> optGalleristCar = galleristCarRepository.findById(id);
+        if (optGalleristCar.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+        }
+        GalleristCar dbGalleristCar = optGalleristCar.get();
+        dbGalleristCar.setGallerist(dbGalleristCar.getGallerist());
+        dbGalleristCar.setCar(dbGalleristCar.getCar());
+        GalleristCar updateGalleristCar = galleristCarRepository.save(dbGalleristCar);
+        BeanUtils.copyProperties(updateGalleristCar, dtoGalleristCar);
+        return dtoGalleristCar;
+
+    }
+
+    @Override
+    public RootEntity<Void> deleteGalleristCar(Long id) {
+
+        Optional<GalleristCar> optGalleristCar = galleristCarRepository.findById(id);
+        if (optGalleristCar.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+        }
+        galleristCarRepository.deleteById(id);
+
+
+        return null;
     }
 }

@@ -39,4 +39,16 @@ public class GalleristCarControllerImpl extends BaseController implements IGalle
         return ok(galleristCarService.getAllGalleristCar());
     }
 
+    @Override
+    @PutMapping("/update/{id}")
+    public RootEntity<DtoGalleristCar> updateGalleristCar(@PathVariable(name = "id") Long id, @RequestBody DtoGalleristCarIU dtoGalleristCarIU) {
+        return ok(galleristCarService.updateGalleristCar(id, dtoGalleristCarIU));
+    }
+
+    @Override
+    @DeleteMapping("/delete/{id}")
+    public RootEntity<Void> deleteGalleristCar(@PathVariable(name = "id") Long id) {
+        galleristCarService.deleteGalleristCar(id);
+        return ok(null);
+    }
 }

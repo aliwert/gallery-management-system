@@ -12,4 +12,8 @@ public interface IGalleristCarController {
     public RootEntity<DtoGalleristCar> getGalleristCarById(Long id);
 
     public RootEntity<List<DtoGalleristCar>> getAllGalleristCar();
+
+    public RootEntity<DtoGalleristCar> updateGalleristCar(Long id, DtoGalleristCarIU dtoGalleristCarIU);
+
+    public RootEntity<Void> deleteGalleristCar(Long id);
 }
