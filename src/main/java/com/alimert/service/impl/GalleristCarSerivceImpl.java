@@ -73,4 +73,39 @@ public class GalleristCarSerivceImpl implements IGalleristCarService {
 
         return dtoGalleristCar;
     }
+
+    @Override
+    public DtoGalleristCar getGalleristCarById(Long id) {
+        //gallerist, car
+
+        DtoGalleristCar dtoGalleristCar = new DtoGalleristCar();
+        Optional<GalleristCar> optGalleristCar = galleristCarRepository.findById(id);
+        if (optGalleristCar.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+        }
+        GalleristCar galleristCar = optGalleristCar.get();
+        BeanUtils.copyProperties(galleristCar, dtoGalleristCar);
+
+        DtoGallerist dtoGallerist = new DtoGallerist();
+        dtoGallerist.setId(galleristCar.getGallerist().getId());
+        dtoGallerist.setFirstName(galleristCar.getGallerist().getFirstName());
+        dtoGallerist.setLastName(galleristCar.getGallerist().getLastName());
+        dtoGallerist.setAddress(dtoGallerist.getAddress());
+
+        DtoCar dtoCar = new DtoCar();
+        dtoCar.setId(galleristCar.getCar().getId());
+        dtoCar.setId(galleristCar.getCar().getId());
+        dtoCar.setPlate(galleristCar.getCar().getPlate());
+        dtoCar.setBrand(galleristCar.getCar().getBrand());
+        dtoCar.setModel(galleristCar.getCar().getModel());
+        dtoCar.setPrice(galleristCar.getCar().getPrice());
+        dtoCar.setDamagePrice(galleristCar.getCar().getDamagePrice());
+        dtoCar.setCurrencyType(galleristCar.getCar().getCurrencyType());
+        dtoCar.setCreateTime(galleristCar.getCar().getCreateTime());
+
+        dtoGalleristCar.setGallerist(dtoGallerist);
+        dtoGalleristCar.setCar(dtoCar);
+
+        return dtoGalleristCar;
+    }
 }

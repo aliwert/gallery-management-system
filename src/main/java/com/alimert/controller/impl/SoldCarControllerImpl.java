@@ -29,7 +29,7 @@ public class SoldCarControllerImpl extends BaseController implements ISoldCarCon
 
     @Override
     @GetMapping("/list/{id}")
-    public RootEntity<DtoSoldCar> getSoldCarById(@PathVariable Long id) {
+    public RootEntity<DtoSoldCar> getSoldCarById(@PathVariable(name = "id") Long id) {
         return ok(soldCarService.getSoldCarById(id));
     }
 

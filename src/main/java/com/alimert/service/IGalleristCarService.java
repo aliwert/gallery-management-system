@@ -10,4 +10,6 @@ public interface IGalleristCarService {
     public DtoGalleristCar saveGalleristCar(DtoGalleristCarIU dtoGalleristCarIU);
 
 
+    public DtoGalleristCar getGalleristCarById(Long id);
+
 }

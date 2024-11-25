@@ -9,4 +9,5 @@ public interface IGalleristCarController {
 
     public RootEntity<DtoGalleristCar> saveGalleristCar(DtoGalleristCarIU dto);
 
+    public RootEntity<DtoGalleristCar> getGalleristCarById(Long id);
 }
