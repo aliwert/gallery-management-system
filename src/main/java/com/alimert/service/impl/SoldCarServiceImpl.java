@@ -7,7 +7,6 @@ import com.alimert.exception.ErrorMessage;
 import com.alimert.exception.MessageType;
 import com.alimert.model.Car;
 import com.alimert.model.Customer;
-import com.alimert.model.Gallerist;
 import com.alimert.model.SoldCar;
 import com.alimert.repository.CarRepository;
 import com.alimert.repository.CustomerRepository;
@@ -22,7 +21,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -125,6 +126,48 @@ public class SoldCarServiceImpl implements ISoldCarService {
         return convertToDto(savedSoldCar);
     }
 
+    @Override
+    public DtoSoldCar getSoldCarById(Long id) {
+
+        DtoSoldCar dtoSoldCar = new DtoSoldCar();
+        Optional<SoldCar> optSoldCar = soldCarRepository.findById(id);
+        if (optSoldCar.isEmpty()) {
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+        }
+        SoldCar soldCar = optSoldCar.get();
+        BeanUtils.copyProperties(soldCar, dtoSoldCar);
+
+        //gallerist, car, customer
+        DtoGallerist dtoGallerist = new DtoGallerist();
+        dtoGallerist.setFirstName(soldCar.getGallerist().getFirstName());
+        dtoGallerist.setLastName(soldCar.getGallerist().getLastName());
+
+        DtoCar dtoCar = new DtoCar();
+        dtoCar.setId(soldCar.getCar().getId());
+        dtoCar.setPlate(soldCar.getCar().getPlate());
+        dtoCar.setBrand(soldCar.getCar().getBrand());
+        dtoCar.setModel(soldCar.getCar().getModel());
+        dtoCar.setPrice(soldCar.getCar().getPrice());
+        dtoCar.setDamagePrice(soldCar.getCar().getDamagePrice());
+        dtoCar.setCurrencyType(soldCar.getCar().getCurrencyType());
+        dtoCar.setCreateTime(soldCar.getCar().getCreateTime());
+
+        DtoCustomer dtoCustomer = new DtoCustomer();
+        dtoCustomer.setId(soldCar.getCustomer().getId());
+        dtoCustomer.setFirstName(soldCar.getCustomer().getFirstName());
+        dtoCustomer.setLastName(soldCar.getCustomer().getLastName());
+        dtoCustomer.setBirthOfDate(soldCar.getCustomer().getBirthOfDate());
+        dtoCustomer.setBirthOfDate(soldCar.getCustomer().getBirthOfDate());
+
+        dtoSoldCar.setCustomer(dtoCustomer);
+        dtoSoldCar.setCar(dtoCar);
+        dtoSoldCar.setGallerist(dtoGallerist);
+
+
+        return dtoSoldCar;
+    }
+
+
     public DtoSoldCar convertToDto(SoldCar soldCar) {
         DtoSoldCar dtoSoldCar = new DtoSoldCar();
         DtoCustomer dtoCustomer = new DtoCustomer();
@@ -137,8 +180,8 @@ public class SoldCarServiceImpl implements ISoldCarService {
         BeanUtils.copyProperties(soldCar.getCar(), dtoCar);
 
         dtoSoldCar.setCustomer(dtoCustomer);
-        dtoSoldCar.setDtoGallerist(dtoGallerist);
-        dtoSoldCar.setDtoCar(dtoCar);
+        dtoSoldCar.setGallerist(dtoGallerist);
+        dtoSoldCar.setCar(dtoCar);
         return dtoSoldCar;
     }
 }

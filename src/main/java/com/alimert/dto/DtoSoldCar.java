@@ -10,7 +10,7 @@ public class DtoSoldCar extends DtoBase {
 
     private DtoCustomer customer;
 
-    private DtoGallerist dtoGallerist;
+    private DtoGallerist gallerist;
 
-    private DtoCar dtoCar;
+    private DtoCar car;
 }
