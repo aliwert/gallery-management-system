@@ -13,6 +13,17 @@ Rent-a-Car Service is a demo project for a car rental service built with Spring 
 ### Prerequisites
 - Java 17
 - Maven
+### Dependencies
+The project uses the following dependencies:
+- Spring Boot Starter Data JPA
+- Spring Boot Starter Security
+- Spring Boot Starter Web
+- JJWT (JSON Web Token) API
+- PostgreSQL
+- Lombok
+- Spring Boot Starter Test
+- Spring Security Test
+- Springdoc OpenAPI
 
 ### Installation
 1. Clone the repository:
