@@ -4,7 +4,7 @@
 Rent-a-Car Service is a demo project for a car rental service built with Spring Boot.
 
 ## Project Structure
-- **src/main/java**: Contains the main application code.
+- **src/main/java/com/alimert**: Contains the main application code.
 - **src/test/java**: Contains the test code.
 - **pom.xml**: Maven configuration file.
 
