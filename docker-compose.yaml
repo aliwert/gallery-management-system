@@ -1,0 +1,21 @@
+services:
+  postgresql:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: 585858
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    networks:
+      - app-network
+
+  autoshowroom:
+    build:
+      context: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 585858
+    networks:
+      - app-network
+networks:
+  app-network:

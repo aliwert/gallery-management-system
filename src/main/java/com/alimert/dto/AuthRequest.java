@@ -14,4 +14,6 @@ public class AuthRequest {
 
     @NotEmpty
     private String password;
+
+
 }
