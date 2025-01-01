@@ -1,3 +1,40 @@
+# Gallery Management System
+
+## Description
+Rent-a-Car Service is a demo project for a car rental service built with Spring Boot.
+
+## Project Structure
+- **src/main/java/com/alimert**: Contains the main application code.
+- **src/test/java**: Contains the test code.
+- **pom.xml**: Maven configuration file.
+
+## Getting Started
+
+### Prerequisites
+- Java 17
+- Maven
+### Dependencies
+The project uses the following dependencies:
+- Spring Boot Starter Data JPA
+- Spring Boot Starter Security
+- Spring Boot Starter Web
+- JJWT (JSON Web Token) API
+- PostgreSQL
+- Lombok
+- Spring Boot Starter Test
+- Spring Security Test
+- Springdoc OpenAPI
+
+### Installation
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/aliwert/rent-a-car-service.git
+    cd rent-a-car-service
+    ```
+2. Build the project:
+    ```sh
+    mvn clean install
+    ```
 ## Before run the project
 * src/main/resources/application.properties
 ```
@@ -16,6 +53,15 @@ spring.jpa.properties.hibernate.format_sql=true
 ```
 spring.jpa.hibernate.ddl-auto=update
 ```
+
+### Running the Application
+To run the application, use the following command:
+```sh
+mvn spring-boot:run
+```
+
+
+
 
 ## Need to do
 - First, you need to go to ``` http://localhost:8080/register``` and sign up. A username and passowrd are sufficient.
