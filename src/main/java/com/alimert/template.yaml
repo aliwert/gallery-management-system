@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: '2010-09-09'
+# https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#sqs
+Transform: AWS::Serverless-2016-10-31
+Description: AWS Serverless Spring Boot 2 API - my.service::my-service
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+
+Parameters:
+  Stage:
+    Type: String
+    Default: dev
+  SNSTopic:
+    Type: String
+  SQSQueue:
+    Type: String
+
+Resources:
+  ApiGatewayApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName:
+        Ref: Stage
+      Variables:
+        Stage:
+          Ref: Stage
+  MyServiceFunction:
+    Type: AWS::Serverless::Function
+    FunctionName: "ServerlessSpringApi-MyServiceFunction"
+    Properties:
+      Handler: my.service.StreamLambdaHandler::handleRequest
+      Runtime: java8
+      CodeUri: "build/distributions/serverless-java-spring-boot.zip"
+      MemorySize: 2048
+      Policies: AWSLambdaBasicExecutionRole
+      Timeout: 30
+      Environment:
+        Variables:
+          # Specify here variables for deployment,
+          # override local using sam-local-env.json
+          SPRING_PROFILES_ACTIVE: aws
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: ApiGatewayApi
+            Path: /ping
+            Method: GET
+        CheckWebsiteScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+        ReceiveFromSNS:
+          Type: SNS
+          Properties:
+            Topic:
+              Ref: SNSTopic
+        ReceiveFromQueue:
+          Type: SQS
+          Properties:
+            Queue:
+              Ref: SQSQueue
+Outputs:
+  MyServiceApi:
+    Description: URL for application
+    Value: !Sub 'https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/ping'
+    Export:
+      Name: MyServiceApi
