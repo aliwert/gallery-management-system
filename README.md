@@ -24,6 +24,8 @@ The project uses the following dependencies:
 - Spring Boot Starter Test
 - Spring Security Test
 - Springdoc OpenAPI
+- Docker
+- AWS
 
 ### Installation
 1. Clone the repository:
