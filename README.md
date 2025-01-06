@@ -1,7 +1,7 @@
 # Gallery Management System
 
 ## Description
-Rent-a-Car Service is a demo project for a car rental service built with Spring Boot.
+Gallery Management System is a demo project for a car rental service built with Spring Boot.
 
 ## Project Structure
 - **src/main/java/com/alimert**: Contains the main application code.
@@ -30,8 +30,8 @@ The project uses the following dependencies:
 ### Installation
 1. Clone the repository:
     ```sh
-    git clone https://github.com/aliwert/rent-a-car-service.git
-    cd rent-a-car-service
+    git clone https://github.com/aliwert/gallery-management-system.git
+    cd gallery-management-system
     ```
 2. Build the project:
     ```sh
